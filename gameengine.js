@@ -10,6 +10,7 @@ window.requestAnimFrame = (function () {
 })();
 
 function GameEngine() {
+    this.player = null;
     this.entities = [];
     this.ctx = null;
     this.surfaceWidth = null;

@@ -1,6 +1,6 @@
 var AM = new AssetManager();
 
-function Animation(spriteSheet, startX, startY, frameWidth, frameHeight, sheetWidth, frameDuration, frames, loop) {
+function Animation(spriteSheet, startX, startY, frameWidth, frameHeight, sheetWidth, frameDuration, frames, loop, scale) {
     this.spriteSheet = spriteSheet;
     this.startX = startX * frameWidth;
     this.startY = startY * frameHeight;
@@ -12,26 +12,31 @@ function Animation(spriteSheet, startX, startY, frameWidth, frameHeight, sheetWi
     this.totalTime = frameDuration * frames;
     this.elapsedTime = 0;
     this.loop = loop;
+    this.scale = scale;
 }
 
 Animation.prototype.drawFrame = function (tick, ctx, x, y) {
     this.elapsedTime += tick;
-    if (this.isDone()) {
-        if (this.loop) this.elapsedTime = 0;
+    if (this.loop) {
+        if (this.isDone()) {
+            this.elapsedTime = 0;
+        }
+    } else if (this.isDone()) {
+        return;
     }
-    var frame = this.currentFrame();
-    var xindex = 0;
-    var yindex = 0;
-    xindex = frame % this.sheetWidth;
-    yindex = Math.floor(frame / this.sheetWidth);
 
-    ctx.drawImage(this.spriteSheet,
-                 xindex * this.frameWidth, yindex * this.frameHeight,  // source from sheet
-                 this.frameWidth, this.frameHeight,
-                 x, y,
-                 this.frameWidth * this.scale,
-                 this.frameHeight * this.scale);
+    var colIndex = this.currentFrame() % this.sheetWidth
+    var rowIndex = Math.floor(this.currentFrame() / this.sheetWidth);
+
+    if ((colIndex + 1) * this.frameWidth > this.spriteSheet.width) {
+        rowIndex++;
+    }
+
+    ctx.drawImage(this.spriteSheet, colIndex * this.frameWidth + this.startX,
+        rowIndex * this.frameHeight + this.startY, this.frameWidth,
+        this.frameHeight, x, y, this.frameWidth * this.scale, this.frameHeight * this.scale);
 }
+
 
 Animation.prototype.currentFrame = function () {
     return Math.floor(this.elapsedTime / this.frameDuration);
@@ -58,9 +63,31 @@ Background.prototype.draw = function () {
 Background.prototype.update = function () {
 };
 
+function Knight(game, spriteSheet) {
+  this.animation = new Animation(spriteSheet, 1, 1, 32, 32, 160, 0.1, 4, true, 1.25);
+  this.speed = 350;
+  this.ctx = game.ctx;
+  Entity.call(this, game, 10, 20);
+}
+
+Knight.prototype = new Entity();
+Knight.prototype.constructor = Knight;
+
+Knight.prototype.update = function () {
+    Entity.prototype.update.call(this);
+}
+
+
+Knight.prototype.draw = function () {
+
+  this.animation.drawFrame(this.game.clockTick, this.game.ctx, this.x, this.y );
+
+      Entity.prototype.draw.call(this);
+}
+
 var gameEngine = new GameEngine();
 var map = new Map(gameEngine);
-AM.queueDownload("./img/knight.PNG");
+AM.queueDownload("./img/knight.png");
 AM.queueDownload("./img/tile1.PNG");
 AM.queueDownload("./img/tile2.PNG")
 
@@ -75,5 +102,7 @@ AM.downloadAll(function () {
 
     map.readMap(new MapData().map);
 
+    gameEngine.player = new Knight(gameEngine, AM.getAsset("./img/knight.png"));
+    gameEngine.addEntity(gameEngine.player);
     console.log("All Done!");
 });
