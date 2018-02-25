@@ -27,8 +27,8 @@ Map.prototype.readMap = function (mapData) {
 function Tile(game, tileType, x, y) {
     //this.animation = new Animation(ASSET_MANAGER.getAsset("./img/grass.png"), 0, 0, 58, 30, 1, .15, 1, true);
     this.gfxString = '';
-    this.normalImage = "./img/tile1.png";
-    this.rockImage = "./img/tile2.png";
+    this.normalImage = "./img/tile1.PNG";
+    this.rockImage = "./img/tile2.PNG";
 
     if (tileType === 0) {
         this.gfxString = this.normalImage;
