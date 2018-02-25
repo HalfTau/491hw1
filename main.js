@@ -60,9 +60,9 @@ Background.prototype.update = function () {
 
 var gameEngine = new GameEngine();
 var map = new Map(gameEngine);
-AM.queueDownload("./img/knight.png");
-AM.queueDownload("./img/tile1.png");
-AM.queueDownload("./img/tile2.png")
+AM.queueDownload("./img/knight.PNG");
+AM.queueDownload("./img/tile1.PNG");
+AM.queueDownload("./img/tile2.PNG")
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
