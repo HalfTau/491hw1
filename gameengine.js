@@ -10,6 +10,7 @@ window.requestAnimFrame = (function () {
 })();
 
 function GameEngine() {
+    this.map = null;
     this.player = null;
     this.entities = [];
     this.ctx = null;
@@ -106,9 +107,9 @@ GameEngine.prototype.addEntity = function (entity) {
 GameEngine.prototype.draw = function () {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     this.ctx.save();
-    for (var i = 0; i < map.mapList.length; i++) {
-        for (var j = 0; j < map.mapList[1].length; j++) {
-            map.mapList[j][i].draw(this.ctx);
+    for (var i = 0; i < this.map.mapList.length; i++) {
+        for (var j = 0; j < this.map.mapList[1].length; j++) {
+            this.map.mapList[j][i].draw(this.ctx);
         }
     }
 

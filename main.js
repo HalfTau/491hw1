@@ -85,8 +85,7 @@ Knight.prototype.draw = function () {
       Entity.prototype.draw.call(this);
 }
 
-var gameEngine = new GameEngine();
-var map = new Map(gameEngine);
+
 AM.queueDownload("./img/player.PNG");
 AM.queueDownload("./img/tile1.PNG");
 AM.queueDownload("./img/tile2.PNG")
@@ -94,13 +93,16 @@ AM.queueDownload("./img/tile2.PNG")
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
     var ctx = canvas.getContext("2d");
+    var gameEngine = new GameEngine();
 
+    gameEngine.map = new Map(gameEngine);
+
+    gameEngine.map.readMap(new MapData().map);
 
     gameEngine.init(ctx);
     gameEngine.start();
 
 
-    map.readMap(new MapData().map);
 
     gameEngine.player = new Knight(gameEngine, AM.getAsset("./img/player.PNG"));
     gameEngine.addEntity(gameEngine.player);
