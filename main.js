@@ -87,7 +87,7 @@ Knight.prototype.draw = function () {
 
 var gameEngine = new GameEngine();
 var map = new Map(gameEngine);
-AM.queueDownload("./img/knight.png");
+AM.queueDownload("./img/player.PNG");
 AM.queueDownload("./img/tile1.PNG");
 AM.queueDownload("./img/tile2.PNG")
 
@@ -102,7 +102,7 @@ AM.downloadAll(function () {
 
     map.readMap(new MapData().map);
 
-    gameEngine.player = new Knight(gameEngine, AM.getAsset("./img/knight.png"));
+    gameEngine.player = new Knight(gameEngine, AM.getAsset("./img/player.PNG"));
     gameEngine.addEntity(gameEngine.player);
     console.log("All Done!");
 });
