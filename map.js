@@ -48,7 +48,7 @@ Tile.prototype.constructor = Tile;
 
 Tile.prototype.draw = function (ctx) {
     ctx.drawImage(
-        this.image,
+        AM.getAsset(this.gfxString),
           this.x * 56,
           this.y * 56
     );

@@ -62,7 +62,7 @@ var gameEngine = new GameEngine();
 var map = new Map(gameEngine);
 AM.queueDownload("./img/knight.png");
 AM.queueDownload("./img/tile1.png");
-AM.queueDownload("./img.tile2.png")
+AM.queueDownload("./img/tile2.png")
 
 AM.downloadAll(function () {
     var canvas = document.getElementById("gameWorld");
