@@ -66,7 +66,7 @@ Background.prototype.update = function () {
 function Knight(game, img) {
   this.animation = [];
   this.currAnimation = null;
-  this.speed = 200;
+  this.speed = 150;
   this.ctx = game.ctx;
   this.animation["S"] = new Animation(img, 0, 0, 32, 32, 160,0.1, 4, true, 1.25);
   this.animation["N"] = new Animation(img, 0, 1, 32, 32, 160,0.1, 4, true, 1.25);
@@ -97,6 +97,10 @@ Knight.prototype.update = function () {
     this.game.player.y += this.game.player.speed * this.game.clockTick;
         this.currAnimation = this.animation["S"];
   }
+  if (this.x > 805) this.x = -10;
+  if (this.y > 705) this.y = -10;
+  if (this.x < -10) this.x = 810;
+  if (this.y < -10) this.y = 710;
   Entity.prototype.update.call(this);
 }
 
