@@ -79,21 +79,17 @@ GameEngine.prototype.startInput = function () {
         console.log("Click Event - X,Y " + e.clientX + ", " + e.clientY + " Delta " + e.deltaY);
     }, false);
 
-    this.ctx.canvas.addEventListener("keydown", function (e) {
-        console.log(e);
-        console.log("Key Down Event - Char " + e.code + " Code " + e.keyCode);
-    }, false);
 
     this.ctx.canvas.addEventListener("keypress", function (e) {
-        if (e.code === "KeyD") that.d = true;
-        that.chars[e.code] = true;
-        console.log(e);
-        console.log("Key Pressed Event - Char " + e.charCode + " Code " + e.keyCode);
+        if (e.code === "KeyD") that.player.x += that.player.speed * that.clockTick;
+        if (e.code === "KeyA") that.player.x -= that.player.speed * that.clockTick;
+        if (e.code === "KeyW") that.player.y -= that.player.speed * that.clockTick;
+        if (e.code === "KeyS") that.player.y += that.player.speed * that.clockTick;
+        //that.chars[e.code] = true;
+
     }, false);
 
     this.ctx.canvas.addEventListener("keyup", function (e) {
-        console.log(e);
-        console.log("Key Up Event - Char " + e.code + " Code " + e.keyCode);
     }, false);
 
     console.log('Input started');

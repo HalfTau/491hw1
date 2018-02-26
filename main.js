@@ -65,7 +65,7 @@ Background.prototype.update = function () {
 
 function Knight(game, spriteSheet) {
   this.animation = new Animation(spriteSheet, 1, 1, 32, 32, 160, 0.1, 4, true, 1.25);
-  this.speed = 350;
+  this.speed = 200;
   this.ctx = game.ctx;
   Entity.call(this, game, 10, 20);
 }
