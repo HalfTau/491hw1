@@ -64,6 +64,7 @@ Background.prototype.update = function () {
 };
 
 function Knight(game, img) {
+  this.direction = 'S';
   this.animation = [];
   this.currAnimation = null;
   this.speed = 150;
@@ -72,6 +73,10 @@ function Knight(game, img) {
   this.animation["N"] = new Animation(img, 0, 1, 32, 32, 160,0.1, 4, true, 1.25);
   this.animation["W"] = new Animation(img, 0, 2, 32, 32, 160,0.1, 4, true, 1.25);
   this.animation["E"] = new Animation(img, 0, 3, 32, 32, 160,0.1, 4, true, 1.25);
+  this.animation["Ssword"] = new Animation(img, 0, 4, 32, 32, 160,0.1, 4, true, 1.25);
+  this.animation["Nsword"] = new Animation(img, 0, 5, 32, 32, 160,0.1, 4, true, 1.25);
+  this.animation["Wsword"] = new Animation(img, 0, 6, 32, 32, 160,0.1, 4, true, 1.25);
+  this.animation["Esword"] = new Animation(img, 0, 7, 32, 32, 160,0.1, 4, true, 1.25);
   this.currAnimation = this.animation["S"];
   Entity.call(this, game, 10, 20);
 
@@ -97,10 +102,24 @@ Knight.prototype.update = function () {
     this.game.player.y += this.game.player.speed * this.game.clockTick;
         this.currAnimation = this.animation["S"];
   }
+  if (this.game.chars["Space"] === true) {
+    if(this.direction === "E") {
+      this.currAnimation = this.animation["Esword"];
+    }
+    if(this.direction === "W") {
+      this.currAnimation = this.animation["Wsword"];
+    }
+    if(this.direction === "N") {
+      this.currAnimation = this.animation["Nsword"];
+    }
+    if(this.direction === "S") {
+      this.currAnimation = this.animation["Ssword"];
+    }
+  }
   if (this.x > 805) this.x = -10;
-  if (this.y > 705) this.y = -10;
+  if (this.y > 705) this.y = 0;
   if (this.x < -10) this.x = 810;
-  if (this.y < -10) this.y = 710;
+  if (this.y < 0) this.y = 700;
   Entity.prototype.update.call(this);
 }
 

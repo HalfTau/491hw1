@@ -53,7 +53,7 @@ GameEngine.prototype.startInput = function () {
     }
 
     var that = this;
-
+    var fired = false;
     // event listeners are added here
 
     this.ctx.canvas.addEventListener("click", function (e) {
@@ -70,11 +70,27 @@ GameEngine.prototype.startInput = function () {
     }, false);
 
     this.ctx.canvas.addEventListener("keypress", function (e) {
-        that.chars[e.code] = true;
+        if(!fired) {
+          fired = true;
+          if(that.player.direction === "W") {
+            that.player.direction = "W"
+          }
+          if(that.player.direction === "E") {
+            that.player.direction = "E"
+          }
+          if(that.player.direction === "N") {
+            that.player.direction = "N"
+          }
+          if(that.player.direction === "S") {
+            that.player.direction = "S"
+          }
+        }
+          that.chars[e.code] = true;
 
     }, false);
 
     this.ctx.canvas.addEventListener("keyup", function (e) {
+      fired = false;
       that.chars[e.code] = false;
     }, false);
 
