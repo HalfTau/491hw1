@@ -63,24 +63,47 @@ Background.prototype.draw = function () {
 Background.prototype.update = function () {
 };
 
-function Knight(game, spriteSheet) {
-  this.animation = new Animation(spriteSheet, 1, 1, 32, 32, 160, 0.1, 4, true, 1.25);
+function Knight(game, img) {
+  this.animation = [];
+  this.currAnimation = null;
   this.speed = 200;
   this.ctx = game.ctx;
+  this.animation["S"] = new Animation(img, 0, 0, 32, 32, 160,0.1, 4, true, 1.25);
+  this.animation["N"] = new Animation(img, 0, 1, 32, 32, 160,0.1, 4, true, 1.25);
+  this.animation["W"] = new Animation(img, 0, 2, 32, 32, 160,0.1, 4, true, 1.25);
+  this.animation["E"] = new Animation(img, 0, 3, 32, 32, 160,0.1, 4, true, 1.25);
+  this.currAnimation = this.animation["S"];
   Entity.call(this, game, 10, 20);
+
 }
 
 Knight.prototype = new Entity();
 Knight.prototype.constructor = Knight;
 
 Knight.prototype.update = function () {
-    Entity.prototype.update.call(this);
+  if (this.game.chars["KeyD"] === true)  {
+    this.game.player.x += this.game.player.speed * this.game.clockTick;
+    this.currAnimation = this.animation["E"];
+  }
+  if (this.game.chars["KeyA"] === true) {
+    this.game.player.x -= this.game.player.speed * this.game.clockTick;
+    this.currAnimation = this.animation["W"];
+  }
+  if (this.game.chars["KeyW"] === true) {
+    this.game.player.y -= this.game.player.speed * this.game.clockTick;
+        this.currAnimation = this.animation["N"];
+  }
+  if (this.game.chars["KeyS"] === true) {
+    this.game.player.y += this.game.player.speed * this.game.clockTick;
+        this.currAnimation = this.animation["S"];
+  }
+  Entity.prototype.update.call(this);
 }
 
 
 Knight.prototype.draw = function () {
 
-  this.animation.drawFrame(this.game.clockTick, this.game.ctx, this.x, this.y );
+  this.currAnimation.drawFrame(this.game.clockTick, this.game.ctx, this.x, this.y );
 
       Entity.prototype.draw.call(this);
 }

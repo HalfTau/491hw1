@@ -12,6 +12,7 @@ window.requestAnimFrame = (function () {
 function GameEngine() {
     this.map = null;
     this.player = null;
+    this.chars = [];
     this.entities = [];
     this.ctx = null;
     this.surfaceWidth = null;
@@ -68,28 +69,13 @@ GameEngine.prototype.startInput = function () {
         e.preventDefault();
     }, false);
 
-    this.ctx.canvas.addEventListener("mousemove", function (e) {
-        //console.log(e);
-        that.mouse = getXandY(e);
-    }, false);
-
-    this.ctx.canvas.addEventListener("mousewheel", function (e) {
-        console.log(e);
-        that.wheel = e;
-        console.log("Click Event - X,Y " + e.clientX + ", " + e.clientY + " Delta " + e.deltaY);
-    }, false);
-
-
     this.ctx.canvas.addEventListener("keypress", function (e) {
-        if (e.code === "KeyD") that.player.x += that.player.speed * that.clockTick;
-        if (e.code === "KeyA") that.player.x -= that.player.speed * that.clockTick;
-        if (e.code === "KeyW") that.player.y -= that.player.speed * that.clockTick;
-        if (e.code === "KeyS") that.player.y += that.player.speed * that.clockTick;
-        //that.chars[e.code] = true;
+        that.chars[e.code] = true;
 
     }, false);
 
     this.ctx.canvas.addEventListener("keyup", function (e) {
+      that.chars[e.code] = false;
     }, false);
 
     console.log('Input started');
