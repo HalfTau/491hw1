@@ -72,16 +72,16 @@ GameEngine.prototype.startInput = function () {
     this.ctx.canvas.addEventListener("keypress", function (e) {
         if(!fired) {
           fired = true;
-          if(that.player.direction === "W") {
+          if(e.code === "keyA") {
             that.player.direction = "W"
           }
-          if(that.player.direction === "E") {
+          if(e.code === "keyD") {
             that.player.direction = "E"
           }
-          if(that.player.direction === "N") {
+          if(e.code === "keyW") {
             that.player.direction = "N"
           }
-          if(that.player.direction === "S") {
+          if(e.code === "keyS") {
             that.player.direction = "S"
           }
         }

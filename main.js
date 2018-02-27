@@ -64,7 +64,6 @@ Background.prototype.update = function () {
 };
 
 function Knight(game, img) {
-  this.direction = 'S';
   this.animation = [];
   this.currAnimation = null;
   this.speed = 150;
@@ -87,18 +86,22 @@ Knight.prototype.constructor = Knight;
 
 Knight.prototype.update = function () {
   if (this.game.chars["KeyD"] === true)  {
+    this.direction = "E";
     this.game.player.x += this.game.player.speed * this.game.clockTick;
     this.currAnimation = this.animation["E"];
   }
   if (this.game.chars["KeyA"] === true) {
+    this.direction = "W";
     this.game.player.x -= this.game.player.speed * this.game.clockTick;
     this.currAnimation = this.animation["W"];
   }
   if (this.game.chars["KeyW"] === true) {
+    this.direction = "N";
     this.game.player.y -= this.game.player.speed * this.game.clockTick;
         this.currAnimation = this.animation["N"];
   }
   if (this.game.chars["KeyS"] === true) {
+    this.direction = "S";
     this.game.player.y += this.game.player.speed * this.game.clockTick;
         this.currAnimation = this.animation["S"];
   }
